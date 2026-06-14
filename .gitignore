@@ -6,6 +6,7 @@ uploads/*
 !uploads/.gitkeep
 
 *.log
+*.db
 .DS_Store
 Thumbs.db
 .vscode/
