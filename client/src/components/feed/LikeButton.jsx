@@ -103,7 +103,7 @@ export default function LikeButton({ liked, count, type, id, postId, onToggle, i
                 {likers.map((liker) => (
                   <div key={liker.id} className="d-flex align-items-center mb-2">
                     <img
-                      src={liker.avatarUrl || "/assets/images/Avatar.png"}
+                      src={liker.avatarUrl || "/assets/images/post_img.png"}
                       alt=""
                       className="_post_img"
                       style={{ width: 40, height: 40, borderRadius: "50%", marginRight: 12 }}
