@@ -15,7 +15,17 @@ const app = express();
 
 app.use(helmet());
 app.use(cors({
-  origin: config.corsOrigin,
+  origin: (origin, callback) => {
+    const allowed = config.corsOrigin ? config.corsOrigin.split(',').map(s => s.trim().replace(/\/$/, '')) : [];
+    // Allow requests with no origin (curl, Postman, server-to-server)
+    if (!origin) return callback(null, true);
+    // Check if origin matches any allowed origin (with or without trailing slash)
+    const isAllowed = allowed.some(allowedOrigin =>
+      origin === allowedOrigin || origin === allowedOrigin + '/'
+    );
+    if (isAllowed) return callback(null, true);
+    callback(new Error('Not allowed by CORS'));
+  },
   credentials: true,
 }));
 app.use(cookieParser());
