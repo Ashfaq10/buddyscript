@@ -22,7 +22,7 @@ A production-grade full-stack social feed application built for the Appifylab Fu
 
 | Feature | Details |
 |---------|---------|
-| **Registration** | First name, last name, email, password with full validation |
+| **Registration** | First name + last name (side-by-side), email, password — single-page, no scrolling |
 | **Login / Logout** | JWT in httpOnly cookies, auto-refresh on expiry |
 | **Feed** | Cursor-based pagination, newest posts first |
 | **Public posts** | Visible to all logged-in users |
@@ -210,6 +210,12 @@ When a user clicks Like, the count updates immediately in the UI before the API 
 ### 6. Cloudinary for Image Storage
 Images are uploaded to Cloudinary, not stored on the server filesystem. Server filesystems on Railway/Render are ephemeral — they reset on redeploys. Cloudinary images persist permanently.
 
+### 7. Zod Validation on All Endpoints
+Every POST/PUT endpoint passes through a Zod schema before reaching the controller. Returns 400 with field-level error details on failure. Post creation also validates content length (1-5000 chars) and visibility enum.
+
+### 8. Bounded API Queries
+Likes lists are capped at 50, comments at 50. Without bounds, a post with millions of likes could crash the server. These limits keep the API safe at any scale.
+
 ---
 
 ## Security
@@ -223,9 +229,10 @@ Images are uploaded to Cloudinary, not stored on the server filesystem. Server f
 | SQL injection | Prisma ORM parameterized queries |
 | XSS | React auto-escapes all JSX; never use `dangerouslySetInnerHTML` |
 | CORS | Whitelisted frontend origin only |
-| Rate limiting | express-rate-limit on auth endpoints |
+| Rate limiting | express-rate-limit on auth routes (20 req/15min prod, 100 dev) |
 | Security headers | Helmet middleware (CSP, HSTS, etc.) |
 | File upload | MIME type whitelist (JPEG/PNG/GIF/WebP) + 5MB limit → returns **400** |
+| Error handling | Generic messages for 500 errors — no internal details leaked |
 | Authorization | Owner-only delete; private post filter at query level |
 
 ---
@@ -238,6 +245,7 @@ Images are uploaded to Cloudinary, not stored on the server filesystem. Server f
 | Database indexes | `createdAt DESC`, composite `(visibility, createdAt)`, all foreign keys |
 | Eager loading | Single Prisma query loads post + author + like count + comment count |
 | Optimistic UI | Likes update before server confirms |
+| Query limits | Likes capped at `take: 50`, comments at `Math.min(limit, 50)` |
 | Connection pooling | Prisma built-in |
 
 ---
