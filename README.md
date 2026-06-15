@@ -250,17 +250,101 @@ Likes lists are capped at 50, comments at 50. Without bounds, a post with millio
 
 ---
 
-## Deployment
+## Free Deployment
 
-### Frontend → Vercel
-1. Push `buddyscript/` to GitHub
-2. Import repo in [vercel.com](https://vercel.com), set root to `client/`
-3. Add env var: `NEXT_PUBLIC_API_URL=https://your-api.railway.app/api`
+All three services can be deployed **completely free**:
 
-### Backend → Railway
-1. Create new project from GitHub repo, set root to `server/`
-2. Add all env vars (use Railway's PostgreSQL plugin for DATABASE_URL)
-3. Start command: `npm start`
+| Service | Platform | Free Tier |
+|---------|----------|-----------|
+| Frontend (Next.js) | **Vercel** | Unlimited, automatic HTTPS |
+| Backend (Express) | **Render** | 750 hrs/month, auto-deploys from Git |
+| Database (PostgreSQL) | **Neon** | 0.5 GB storage, never expires |
+
+---
+
+### Step 1: Database → Neon (Free PostgreSQL)
+
+1. Go to [neon.tech](https://neon.tech) → Sign up with GitHub
+2. Click **Create Project** → name it `buddyscript`
+3. Copy the **connection string** (looks like `postgresql://buddyscript_owner:xxx@ep-xxx.us-east-2.aws.neon.tech/buddyscript?sslmode=require`)
+4. Copy the connection string — you'll need it for Render and for local migration
+
+**Important:** Neon requires SSL. If the connection string doesn't already have `?sslmode=require`, append it:
+```
+postgresql://user:pass@host/dbname?sslmode=require
+```
+
+Then run your **first migration** from your local machine against Neon:
+```bash
+cd server
+# Set DATABASE_URL to your Neon connection string temporarily
+set DATABASE_URL=postgresql://user:pass@host/dbname?sslmode=require
+npx prisma migrate deploy
+node prisma/seed.js
+```
+
+---
+
+### Step 2: Backend → Render (Free Express.js)
+
+**Option A — Automatic (recommended):**
+
+The `render.yaml` in the repo root configures everything. Just:
+
+1. Go to [dashboard.render.com](https://dashboard.render.com) → Sign up with GitHub
+2. Click **New** → **Blueprint**
+3. Connect your `Ashfaq10/buddyscript` repo
+4. Render auto-detects `render.yaml` and creates the web service
+5. Before deploying, set these **missing env vars** in the service dashboard:
+   - `DATABASE_URL` → your Neon connection string (with `?sslmode=require`)
+   - `CORS_ORIGIN` → `https://buddyscript.vercel.app` (or your Vercel URL)
+   - `CLOUDINARY_CLOUD_NAME` → your Cloudinary cloud name
+   - `CLOUDINARY_API_KEY` → your Cloudinary API key
+   - `CLOUDINARY_API_SECRET` → your Cloudinary API secret
+6. Click **Deploy**
+
+**Option B — Manual:**
+
+1. Go to [dashboard.render.com](https://dashboard.render.com) → **New** → **Web Service**
+2. Connect your repo → set:
+   - **Root Directory:** `server`
+   - **Environment:** Node
+   - **Build Command:** `npm install && npx prisma generate`
+   - **Start Command:** `npm start`
+3. Add all env vars (same list as above)
+4. Click **Create Web Service**
+
+Your API will be live at `https://buddyscript-api.onrender.com`
+
+---
+
+### Step 3: Frontend → Vercel (Free Next.js)
+
+1. Go to [vercel.com](https://vercel.com) → Sign up with GitHub
+2. Click **Add New** → **Project**
+3. Import `Ashfaq10/buddyscript`
+4. Configure:
+   - **Root Directory:** `client`
+   - **Framework Preset:** Next.js (auto-detected)
+5. Add environment variable:
+   - `NEXT_PUBLIC_API_URL` → `https://buddyscript-api.onrender.com/api`
+6. Click **Deploy**
+
+Your app will be live at `https://buddyscript.vercel.app`
+
+---
+
+### After Deployment — Verify
+
+1. Open `https://buddyscript.vercel.app` → should see login page
+2. Register a new account → should work (auto-login to feed)
+3. Try test accounts: `alice@example.com` / `password123`
+4. Create a post with an image → upload should work (Cloudinary)
+5. Check Render logs if something fails
+
+### Important Render Note
+
+Render's free tier **spins down after 15 minutes of inactivity**. The first request after a spin-down can take 30-60 seconds to wake up. Subsequent requests are instant. For the video demo, keep making requests to prevent spin-down.
 
 ---
 
