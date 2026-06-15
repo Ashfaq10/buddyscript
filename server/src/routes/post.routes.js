@@ -24,7 +24,7 @@ const uploadWithErrorHandling = (req, res, next) => {
 };
 
 router.get('/', authenticate, postController.getFeed);
-router.post('/', authenticate, validate(createPostSchema), uploadWithErrorHandling, postController.create);
+router.post('/', authenticate, uploadWithErrorHandling, validate(createPostSchema), postController.create);
 router.delete('/:id', authenticate, postController.remove);
 
 module.exports = router;
