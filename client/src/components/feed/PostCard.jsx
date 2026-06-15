@@ -116,7 +116,7 @@ export default function PostCard({ post, onDelete, onLikeToggle, onCommentAdded 
           liked={post.isLiked}
           count={post.likeCount}
           postId={post.id}
-          onToggle={(id, liked) => onLikeToggle(post.id, liked)}
+          onToggle={(id, liked, likeCount) => onLikeToggle(post.id, liked, likeCount)}
         />
         <button className="_feed_inner_timeline_reaction_comment _feed_reaction" style={{ background: "none", border: "none", cursor: "pointer", fontSize: 14, color: "#666" }}>
           <span className="_feed_inner_timeline_reaction_link">
