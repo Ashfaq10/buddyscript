@@ -10,7 +10,7 @@ A production-grade full-stack social feed application built for the Appifylab Fu
 |-------|-----------|-----|
 | **Frontend** | Next.js 14 (App Router) | SSR, route protection, modern React patterns |
 | **Backend** | Node.js + Express.js | Separate API server = clean architecture |
-| **Database** | SQLite (dev) → PostgreSQL (prod) | Relational model fits social feed |
+| **Database** | PostgreSQL | Relational model fits social feed |
 | **ORM** | Prisma | Type-safe queries, migrations, connection pooling |
 | **Auth** | JWT (access + refresh tokens) | httpOnly cookies — never localStorage |
 | **Image Upload** | Multer + Cloudinary | Persistent cloud storage, survives redeploys |
@@ -81,6 +81,7 @@ buddyscript/
 ### Prerequisites
 - Node.js 18+
 - npm 9+
+- PostgreSQL 14+ (running on port 5432)
 
 ### 1. Backend
 ```bash
@@ -91,13 +92,12 @@ npm install
 Create `server/.env`:
 ```env
 PORT=5000
-DATABASE_URL="file:./dev.db"
-JWT_SECRET=change-this-to-random-secret
+DATABASE_URL="postgresql://postgres:password@localhost:5432/buddyscript"
+JWT_ACCESS_SECRET=change-this-to-random-secret
 JWT_REFRESH_SECRET=change-this-to-another-secret
-JWT_EXPIRES_IN=15m
-JWT_REFRESH_EXPIRES_IN=7d
+JWT_ACCESS_EXPIRY=15m
+JWT_REFRESH_EXPIRY=7d
 CORS_ORIGIN=http://localhost:3000
-NODE_ENV=development
 
 # Cloudinary (for image upload feature)
 CLOUDINARY_CLOUD_NAME=your_cloud_name
@@ -239,30 +239,6 @@ Images are uploaded to Cloudinary, not stored on the server filesystem. Server f
 | Eager loading | Single Prisma query loads post + author + like count + comment count |
 | Optimistic UI | Likes update before server confirms |
 | Connection pooling | Prisma built-in |
-
----
-
-## Switching to PostgreSQL
-
-The schema is ready — just change the provider:
-
-1. Update `server/prisma/schema.prisma`:
-   ```diff
-   - provider = "sqlite"
-   + provider = "postgresql"
-   ```
-   Restore `@db.Text` on String fields and `sort: Desc` in indexes.
-
-2. Update `server/.env`:
-   ```
-   DATABASE_URL="postgresql://user:pass@host:5432/buddyscript"
-   ```
-
-3. Run:
-   ```bash
-   npx prisma migrate dev --name init
-   node prisma/seed.js
-   ```
 
 ---
 

@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -26,14 +26,13 @@ model User {
 }
 
 model Post {
-  id         Int      @id @default(autoincrement())
-  content    String
-  imageUrl   String?  @map("image_url")
-  // "PUBLIC" or "PRIVATE" — stored as String for SQLite compatibility
-  visibility String   @default("PUBLIC")
-  authorId   Int      @map("author_id")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  id         Int        @id @default(autoincrement())
+  content    String     @db.Text
+  imageUrl   String?    @map("image_url")
+  visibility Visibility @default(PUBLIC)
+  authorId   Int        @map("author_id")
+  createdAt  DateTime   @default(now()) @map("created_at")
+  updatedAt  DateTime   @updatedAt @map("updated_at")
 
   author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   comments Comment[]
@@ -47,7 +46,7 @@ model Post {
 
 model Comment {
   id        Int      @id @default(autoincrement())
-  content   String
+  content   String   @db.Text
   postId    Int      @map("post_id")
   authorId  Int      @map("author_id")
   parentId  Int?     @map("parent_id")
@@ -81,4 +80,9 @@ model Like {
   @@map("likes")
   @@index([postId])
   @@index([commentId])
+}
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
 }

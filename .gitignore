@@ -7,7 +7,6 @@ uploads/*
 
 *.log
 *.db
-TEST_REPORT.md
 .DS_Store
 Thumbs.db
 .vscode/
