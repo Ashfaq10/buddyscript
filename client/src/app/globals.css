@@ -15,3 +15,20 @@ a {
 ._main_layout {
   overflow-y: auto !important;
 }
+
+/* Remove unwanted pseudo-elements from original design */
+._feed_inner_timeline_post_area::before,
+._feed_inner_timeline_post_area::after,
+._feed_inner_timeline_content::before,
+._feed_inner_timeline_content::after,
+._feed_inner_timeline_reaction::before,
+._feed_inner_timeline_reaction::after {
+  display: none !important;
+}
+
+/* Better textarea styling for create post */
+._feed_inner_timeline_post_area textarea:focus {
+  outline: none !important;
+  border-color: #1890FF !important;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2) !important;
+}
