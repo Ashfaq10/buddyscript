@@ -8,6 +8,7 @@ const authRoutes = require('./routes/auth.routes');
 const postRoutes = require('./routes/post.routes');
 const commentRoutes = require('./routes/comment.routes');
 const likeRoutes = require('./routes/like.routes');
+const commentLikeRoutes = require('./routes/comment.like.routes');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -34,7 +35,7 @@ app.use('/api/posts', postRoutes);
 app.use('/api/posts', commentRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/posts', likeRoutes);
-app.use('/api/comments', likeRoutes);
+app.use('/api/comments', commentLikeRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });

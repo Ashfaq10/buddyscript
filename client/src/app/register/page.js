@@ -87,30 +87,27 @@ export default function RegisterPage() {
             </div>
             <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
               <div className="_social_registration_content">
-                <div className="_social_registration_right_logo _mar_b28">
-                  <img src="/assets/images/logo.svg" alt="Image" className="_right_logo" />
-                </div>
-                <p className="_social_registration_content_para _mar_b8">Get Started Now</p>
-                <h4 className="_social_registration_content_title _titl4 _mar_b50">Registration</h4>
-                <button type="button" className="_social_registration_content_btn _mar_b40">
+                <p className="_social_registration_content_para _mar_b4">Get Started Now</p>
+                <h4 className="_social_registration_content_title _titl4 _mar_b10">Registration</h4>
+                <button type="button" className="_social_registration_content_btn _mar_b14">
                   <img src="/assets/images/google.svg" alt="Image" className="_google_img" />
                   <span>Register with google</span>
                 </button>
-                <div className="_social_registration_content_bottom_txt _mar_b40">
+                <div className="_social_registration_content_bottom_txt _mar_b14">
                   <span>Or</span>
                 </div>
 
                 {error && (
-                  <div className="alert alert-danger" role="alert">
+                  <div className="alert alert-danger py-2 mb-2" role="alert">
                     {error}
                   </div>
                 )}
 
                 <form className="_social_registration_form" onSubmit={handleSubmit}>
                   <div className="row">
-                    <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                      <div className="_social_registration_form_input _mar_b14">
-                        <label className="_social_registration_label _mar_b8">First Name</label>
+                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                      <div className="_social_registration_form_input _mar_b6">
+                        <label className="_social_registration_label _mar_b3">First Name</label>
                         <input
                           type="text"
                           className="form-control _social_registration_input"
@@ -120,9 +117,9 @@ export default function RegisterPage() {
                         />
                       </div>
                     </div>
-                    <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                      <div className="_social_registration_form_input _mar_b14">
-                        <label className="_social_registration_label _mar_b8">Last Name</label>
+                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                      <div className="_social_registration_form_input _mar_b6">
+                        <label className="_social_registration_label _mar_b3">Last Name</label>
                         <input
                           type="text"
                           className="form-control _social_registration_input"
@@ -132,9 +129,11 @@ export default function RegisterPage() {
                         />
                       </div>
                     </div>
+                  </div>
+                  <div className="row">
                     <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                      <div className="_social_registration_form_input _mar_b14">
-                        <label className="_social_registration_label _mar_b8">Email</label>
+                      <div className="_social_registration_form_input _mar_b6">
+                        <label className="_social_registration_label _mar_b3">Email</label>
                         <input
                           type="email"
                           className="form-control _social_registration_input"
@@ -144,9 +143,11 @@ export default function RegisterPage() {
                         />
                       </div>
                     </div>
+                  </div>
+                  <div className="row">
                     <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                      <div className="_social_registration_form_input _mar_b14">
-                        <label className="_social_registration_label _mar_b8">Password</label>
+                      <div className="_social_registration_form_input _mar_b6">
+                        <label className="_social_registration_label _mar_b3">Password</label>
                         <input
                           type="password"
                           className="form-control _social_registration_input"
@@ -157,9 +158,11 @@ export default function RegisterPage() {
                         />
                       </div>
                     </div>
+                  </div>
+                  <div className="row">
                     <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                      <div className="_social_registration_form_input _mar_b14">
-                        <label className="_social_registration_label _mar_b8">Repeat Password</label>
+                      <div className="_social_registration_form_input _mar_b6">
+                        <label className="_social_registration_label _mar_b3">Repeat Password</label>
                         <input
                           type="password"
                           className="form-control _social_registration_input"
@@ -189,7 +192,7 @@ export default function RegisterPage() {
                   </div>
                   <div className="row">
                     <div className="col-lg-12 col-md-12 col-xl-12 col-sm-12">
-                      <div className="_social_registration_form_btn _mar_t40 _mar_b60">
+                      <div className="_social_registration_form_btn _mar_t12 _mar_b10">
                         <button type="submit" className="_social_registration_form_btn_link _btn1" disabled={loading}>
                           {loading ? "Registering..." : "Register now"}
                         </button>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import api from "@/lib/api";
 
@@ -11,6 +11,13 @@ export default function LikeButton({ liked, count, type, id, postId, onToggle, i
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [likers, setLikers] = useState([]);
+
+  // Sync internal state when parent updates props (e.g. after a new comment is added
+  // and the parent re-renders with fresh isLiked/likeCount values).
+  useEffect(() => {
+    setIsLiked(liked);
+    setLikeCount(count);
+  }, [liked, count]);
 
   const handleToggle = async (e) => {
     e.stopPropagation();
@@ -31,7 +38,7 @@ export default function LikeButton({ liked, count, type, id, postId, onToggle, i
       const { data } = await api.post(url);
       setIsLiked(data.liked);
       setLikeCount(data.likeCount);
-      if (onToggle) onToggle(id, data.liked, data.likeCount, isReply, parentId);
+      if (onToggle) onToggle(id, data.liked, data.likeCount);
     } catch {
       setIsLiked(prevLiked);
       setLikeCount(prevCount);

@@ -46,7 +46,7 @@ export default function CommentSection({ postId, onCommentAdded }) {
         <form className="_feed_inner_comment_box_form" onSubmit={handleSubmit}>
           <div className="_feed_inner_comment_box_content">
             <div className="_feed_inner_comment_box_content_image">
-              <img src="/assets/images/comment_img.png" alt="" className="_comment_img" />
+              <img src={user?.avatarUrl || "/assets/images/post_img.png"} alt="" className="_comment_img" style={{ width: 40, height: 40, borderRadius: "50%", objectFit: "cover" }} />
             </div>
             <div className="_feed_inner_comment_box_content_txt">
               <textarea

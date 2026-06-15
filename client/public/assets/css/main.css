@@ -375,14 +375,22 @@
     margin:0 auto;
 }
 ._social_registration_wrapper {
-    padding: 100px 0px;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    padding: 20px 0px;
     background: var(--bg1);
     position: relative;
     z-index: 1;
+    overflow: hidden;
 }
 ._social_registration_content {
     background: var(--bg2);
-    padding: 48px;
+    padding: 28px 32px;
     border-radius: 6px;
 }
 ._social_registration_content_para {
@@ -392,7 +400,7 @@
     text-align: center;
 }
 ._social_registration_content_title {
-    font-size: 28px;
+    font-size: 24px;
     text-align: center;
 }
 ._social_registration_content_btn {
@@ -451,7 +459,7 @@
 }
 ._social_registration_label {
     font-weight: 500;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1.4;
     color: var(--color4);
 }
@@ -459,7 +467,7 @@
     background: var(--bg2);
     border: 1px solid var(--bcolor2);
     border-radius: 6px;
-    height: 48px;
+    height: 38px;
 }
 ._social_registration_input::-webkit-input-placeholder {
     font-weight: normal;

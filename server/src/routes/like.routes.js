@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const likeController = require('../controllers/like.controller');
+const { togglePostLike, getPostLikes } = require('../controllers/like.controller');
 const { authenticate } = require('../middleware/auth');
 
-router.post('/:postId/like', authenticate, likeController.togglePostLike);
-router.get('/:postId/likes', authenticate, likeController.getPostLikes);
-router.post('/:commentId/like', authenticate, likeController.toggleCommentLike);
-router.get('/:commentId/likes', authenticate, likeController.getCommentLikes);
+// POST /api/posts/:postId/like
+router.post('/:postId/like', authenticate, togglePostLike);
+// GET  /api/posts/:postId/likes
+router.get('/:postId/likes', authenticate, getPostLikes);
 
 module.exports = router;

@@ -50,7 +50,15 @@ function FeedContent() {
       <div className="_main_layout">
         <Navbar />
 
-        <section className="_feed_section">
+        <section
+          className="_feed_section"
+          style={{
+            paddingTop: 80,
+            height: "100vh",
+            overflowY: "auto",
+            paddingBottom: 40,
+          }}
+        >
           <div className="container _custom_container">
             <div className="row">
               <div className="col-xl-3 col-lg-3 d-none d-lg-block">
