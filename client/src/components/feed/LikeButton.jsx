@@ -31,7 +31,7 @@ export default function LikeButton({ liked, count, type, id, postId, onToggle, i
       const { data } = await api.post(url);
       setIsLiked(data.liked);
       setLikeCount(data.liked ? prevCount + 1 : prevCount - 1);
-      if (onToggle) onToggle(id, data.liked, isReply, parentId);
+      if (onToggle) onToggle(id, data.liked, data.likeCount, isReply, parentId);
     } catch {
       setIsLiked(prevLiked);
       setLikeCount(prevCount);

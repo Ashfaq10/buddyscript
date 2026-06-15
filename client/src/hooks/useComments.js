@@ -57,18 +57,18 @@ export function useComments(postId) {
     return data.reply;
   };
 
-  const updateCommentLikes = (pId, commentId, liked, isReply = false, parentId = null) => {
+  const updateCommentLikes = (pId, commentId, liked, likeCount, isReply = false, parentId = null) => {
     setComments((prev) => {
       const items = (prev[pId]?.items || []).map((c) => {
         if (!isReply && c.id === commentId) {
-          return { ...c, isLiked: liked, likeCount: liked ? c.likeCount + 1 : c.likeCount - 1 };
+          return { ...c, isLiked: liked, likeCount };
         }
         if (isReply && c.id === parentId) {
           return {
             ...c,
             replies: c.replies.map((r) =>
               r.id === commentId
-                ? { ...r, isLiked: liked, likeCount: liked ? r.likeCount + 1 : r.likeCount - 1 }
+                ? { ...r, isLiked: liked, likeCount }
                 : r
             ),
           };

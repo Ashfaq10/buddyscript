@@ -18,8 +18,8 @@ function FeedContent() {
     await createPost(content, image, visibility);
   };
 
-  const handleLikeToggle = useCallback((postId, liked) => {
-    updatePostLikes(postId, liked);
+  const handleLikeToggle = useCallback((postId, liked, likeCount) => {
+    updatePostLikes(postId, liked, likeCount);
   }, [updatePostLikes]);
 
   const handleCommentAdded = useCallback((postId) => {

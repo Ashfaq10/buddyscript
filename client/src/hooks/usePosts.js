@@ -53,11 +53,11 @@ export function usePosts() {
     setPosts((prev) => prev.filter((p) => p.id !== postId));
   };
 
-  const updatePostLikes = (postId, liked) => {
+  const updatePostLikes = (postId, liked, likeCount) => {
     setPosts((prev) =>
       prev.map((p) =>
         p.id === postId
-          ? { ...p, isLiked: liked, likeCount: liked ? p.likeCount + 1 : p.likeCount - 1 }
+          ? { ...p, isLiked: liked, likeCount }
           : p
       )
     );
