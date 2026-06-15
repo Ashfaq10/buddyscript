@@ -48,8 +48,8 @@ export default function CreatePost({ onSubmit }) {
               placeholder="What's on your mind?"
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              style={{ border: "none", boxShadow: "none", resize: "none", fontSize: 14 }}
-              rows={2}
+              style={{ border: "1px solid #e0e0e0", borderRadius: 20, background: "#f0f2f5", boxShadow: "none", resize: "none", fontSize: 14, padding: "10px 14px" }}
+              rows={3}
             />
           </div>
         </div>
