@@ -3,6 +3,8 @@ const router = express.Router();
 const multer = require('multer');
 const postController = require('../controllers/post.controller');
 const { authenticate } = require('../middleware/auth');
+const { validate } = require('../middleware/validate');
+const { createPostSchema } = require('../services/post.service');
 const { upload } = require('../middleware/upload');
 
 // Custom multer error handler — returns 400 instead of 500
@@ -22,7 +24,7 @@ const uploadWithErrorHandling = (req, res, next) => {
 };
 
 router.get('/', authenticate, postController.getFeed);
-router.post('/', authenticate, uploadWithErrorHandling, postController.create);
+router.post('/', authenticate, validate(createPostSchema), uploadWithErrorHandling, postController.create);
 router.delete('/:id', authenticate, postController.remove);
 
 module.exports = router;

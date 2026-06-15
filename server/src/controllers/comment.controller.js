@@ -121,7 +121,7 @@ const getComments = async (req, res, next) => {
       postId,
       userId: req.user.id,
       cursor,
-      limit: limit ? parseInt(limit) : 5,
+      limit: Math.min(limit ? parseInt(limit) : 5, 50),
     });
     res.json(result);
   } catch (err) {

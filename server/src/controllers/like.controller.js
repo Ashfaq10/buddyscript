@@ -44,6 +44,7 @@ const likeService = {
       where: { postId },
       include: { user: { select: { id: true, firstName: true, lastName: true, avatarUrl: true } } },
       orderBy: { createdAt: 'desc' },
+      take: 50,
     });
     return likes.map((l) => l.user);
   },
@@ -53,6 +54,7 @@ const likeService = {
       where: { commentId },
       include: { user: { select: { id: true, firstName: true, lastName: true, avatarUrl: true } } },
       orderBy: { createdAt: 'desc' },
+      take: 50,
     });
     return likes.map((l) => l.user);
   },
